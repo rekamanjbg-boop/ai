@@ -1,10 +1,10 @@
 import { basename, extname, join } from "node:path";
-import { Readable } from "node:stream";
 import type { Job } from "bullmq";
 import type { RuntimeConfig } from "@media/shared/config";
 import { createLogger } from "@media/shared/logger";
 import type { StorageAdapter } from "@media/storage/adapter";
 import { createNextcloudClient } from "./nextcloud-client.js";
+import { nodeReadableFromWeb } from "./web-stream.js";
 
 type SyncJobData = {
   projectId: string;
@@ -60,7 +60,7 @@ export async function syncNextcloudJob(
 
     await retry(config.nextcloud.uploadRetries, () => nextcloud.upload({
       remotePath,
-      body: Readable.fromWeb(response.body),
+      body: nodeReadableFromWeb(response.body),
       contentType: response.headers.get("content-type") ?? contentTypeFromName(fileName)
     }));
   }

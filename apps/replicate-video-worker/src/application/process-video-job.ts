@@ -1,9 +1,9 @@
-import { Readable } from "node:stream";
 import type { Job } from "bullmq";
 import type { RuntimeConfig } from "@media/shared/config";
 import { createLogger } from "@media/shared/logger";
 import type { StorageAdapter } from "@media/storage/adapter";
 import { createReplicateClient, type ReplicatePrediction } from "../infrastructure/replicate-client.js";
+import { nodeReadableFromWeb } from "../infrastructure/web-stream.js";
 import { replicateVideoTaskSchema, type ReplicateVideoTask } from "../domain/video-task.js";
 import { findVideoOutputUrl } from "./video-output.js";
 
@@ -37,7 +37,7 @@ export async function processVideoJob(
   await report(job, "uploading", 92, { outputKey });
   const uploaded = await storage.putStream(
     outputKey,
-    Readable.fromWeb(download.stream),
+    nodeReadableFromWeb(download.stream),
     {
       contentType: normalizeVideoContentType(download.contentType),
       metadata: {
@@ -126,4 +126,3 @@ function tail(value: string, maxLength: number) {
 function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
-
