@@ -58,9 +58,11 @@ export async function syncNextcloudJob(
       throw new Error(`Failed to fetch sync source: ${response.status}`);
     }
 
+    const responseBody = response.body;
+
     await retry(config.nextcloud.uploadRetries, () => nextcloud.upload({
       remotePath,
-      body: nodeReadableFromWeb(response.body),
+      body: nodeReadableFromWeb(responseBody),
       contentType: response.headers.get("content-type") ?? contentTypeFromName(fileName)
     }));
   }
