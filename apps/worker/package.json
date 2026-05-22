@@ -1,0 +1,20 @@
+{
+  "name": "@media/worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@media/comfyui-bridge": "*",
+    "@media/queue": "*",
+    "@media/shared": "*",
+    "@media/storage": "*",
+    "@remotion/bundler": "^4.0.306",
+    "@remotion/renderer": "^4.0.306",
+    "bullmq": "^5.52.2"
+  }
+}

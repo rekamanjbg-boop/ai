@@ -1,0 +1,23 @@
+{
+  "name": "@media/remotion",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "remotion studio src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "render": "remotion render src/index.ts Main out/video.mp4",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.306",
+    "@remotion/player": "^4.0.306",
+    "remotion": "^4.0.306",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.4",
+    "@types/react-dom": "^19.1.5"
+  }
+}
+
