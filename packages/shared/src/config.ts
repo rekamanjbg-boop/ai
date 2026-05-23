@@ -29,6 +29,7 @@ const envSchema = z.object({
   NEXTCLOUD_ROOT_FOLDER: z.string().default("/AI Media Platform"),
   NEXTCLOUD_UPLOAD_RETRIES: z.coerce.number().default(3),
   SYNC_CONCURRENCY: z.coerce.number().default(2),
+  OPENAI_API_KEY: z.string().optional(),
   REPLICATE_API_TOKEN: z.string().optional(),
   REPLICATE_MODEL_OWNER: z.string().optional(),
   REPLICATE_MODEL_NAME: z.string().optional(),
@@ -81,6 +82,7 @@ export function loadConfig() {
       uploadRetries: env.NEXTCLOUD_UPLOAD_RETRIES
     },
     syncConcurrency: env.SYNC_CONCURRENCY,
+    openaiApiKey: env.OPENAI_API_KEY,
     replicate: {
       apiToken: env.REPLICATE_API_TOKEN,
       modelOwner: env.REPLICATE_MODEL_OWNER,

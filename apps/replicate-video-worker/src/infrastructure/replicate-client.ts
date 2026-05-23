@@ -97,10 +97,22 @@ function resolveEndpoint(config: RuntimeConfig, task: ReplicateVideoTask) {
 }
 
 function resolveBody(config: RuntimeConfig, task: ReplicateVideoTask) {
-  const input = {
+  const input: Record<string, unknown> = {
     ...task.input,
     prompt: task.input.prompt ?? task.prompt
   };
+
+  const modelOwner = task.model?.owner ?? config.replicate.modelOwner;
+  const modelName = task.model?.name ?? config.replicate.modelName;
+
+  if (
+    config.openaiApiKey &&
+    modelOwner === "openai" &&
+    modelName?.startsWith("sora-") &&
+    !input.openai_api_key
+  ) {
+    input.openai_api_key = config.openaiApiKey;
+  }
 
   const version = task.model?.version ?? config.replicate.modelVersion;
 
@@ -110,4 +122,3 @@ function resolveBody(config: RuntimeConfig, task: ReplicateVideoTask) {
 
   return { input };
 }
-
